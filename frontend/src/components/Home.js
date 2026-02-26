@@ -114,6 +114,23 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <section className="info-section">
+        <div className="container">
+          <div className="card" style={{ textAlign: 'center', background: 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)', color: 'white' }}>
+            <h2 style={{ color: 'white', marginBottom: '20px' }}>
+              🆘 Need Emergency Help?
+            </h2>
+            <p style={{ fontSize: '18px', marginBottom: '30px', opacity: 0.95 }}>
+              Can't find donors or in an emergency situation? Contact our NGO partners
+              for immediate assistance. We're here to help 24/7!
+            </p>
+            <Link to="/contact-ngo" className="btn" style={{ background: 'white', color: '#dc3545', fontWeight: '600', padding: '15px 30px', fontSize: '18px' }}>
+              Contact NGO Now
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -14,126 +14,126 @@ def create_sample_donors():
         db.close()
         return
     
-    # Sample locations around New York City
+    # Sample locations around Dehradun/Rishikesh area (30.3275, 78.0325)
     sample_donors = [
         {
-            "name": "John Smith",
-            "email": "john.smith@example.com",
-            "phone": "+1-212-555-0101",
+            "name": "Rajesh Kumar",
+            "email": "rajesh.kumar@example.com",
+            "phone": "+91-9876543210",
             "blood_type": "O+",
             "age": 28,
             "weight": 75.5,
-            "address": "123 Broadway, New York, NY 10001",
-            "latitude": 40.7589,
-            "longitude": -73.9851,
+            "address": "Clock Tower, Dehradun, Uttarakhand 248001",
+            "latitude": 30.3165,
+            "longitude": 78.0322,
             "last_donation_date": (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Sarah Johnson",
-            "email": "sarah.j@example.com",
-            "phone": "+1-212-555-0102",
+            "name": "Priya Sharma",
+            "email": "priya.sharma@example.com",
+            "phone": "+91-9876543211",
             "blood_type": "A+",
             "age": 32,
             "weight": 62.0,
-            "address": "456 5th Avenue, New York, NY 10018",
-            "latitude": 40.7549,
-            "longitude": -73.9840,
+            "address": "Rajpur Road, Dehradun, Uttarakhand 248009",
+            "latitude": 30.3398,
+            "longitude": 78.0445,
             "last_donation_date": (datetime.now() - timedelta(days=120)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Michael Brown",
-            "email": "m.brown@example.com",
-            "phone": "+1-212-555-0103",
+            "name": "Amit Singh",
+            "email": "amit.singh@example.com",
+            "phone": "+91-9876543212",
             "blood_type": "B+",
             "age": 45,
             "weight": 85.0,
-            "address": "789 Park Avenue, New York, NY 10021",
-            "latitude": 40.7736,
-            "longitude": -73.9566,
+            "address": "Paltan Bazaar, Dehradun, Uttarakhand 248001",
+            "latitude": 30.3255,
+            "longitude": 78.0436,
             "last_donation_date": (datetime.now() - timedelta(days=60)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Emily Davis",
-            "email": "emily.davis@example.com",
-            "phone": "+1-212-555-0104",
+            "name": "Neha Gupta",
+            "email": "neha.gupta@example.com",
+            "phone": "+91-9876543213",
             "blood_type": "AB+",
             "age": 29,
             "weight": 58.5,
-            "address": "321 Madison Avenue, New York, NY 10017",
-            "latitude": 40.7527,
-            "longitude": -73.9772,
+            "address": "Sahastradhara Road, Dehradun, Uttarakhand 248001",
+            "latitude": 30.3618,
+            "longitude": 78.0832,
             "last_donation_date": (datetime.now() - timedelta(days=150)).strftime("%Y-%m-%d")
         },
         {
-            "name": "David Wilson",
-            "email": "d.wilson@example.com",
-            "phone": "+1-212-555-0105",
+            "name": "Vikram Yadav",
+            "email": "vikram.yadav@example.com",
+            "phone": "+91-9876543214",
             "blood_type": "O-",
             "age": 38,
             "weight": 80.0,
-            "address": "555 Lexington Avenue, New York, NY 10022",
-            "latitude": 40.7580,
-            "longitude": -73.9716,
+            "address": "Mussoorie Road, Dehradun, Uttarakhand 248009",
+            "latitude": 30.3255,
+            "longitude": 78.0322,
             "last_donation_date": (datetime.now() - timedelta(days=100)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Jennifer Martinez",
-            "email": "jen.martinez@example.com",
-            "phone": "+1-212-555-0106",
+            "name": "Anjali Verma",
+            "email": "anjali.verma@example.com",
+            "phone": "+91-9876543215",
             "blood_type": "A-",
             "age": 26,
             "weight": 55.0,
-            "address": "789 Amsterdam Avenue, New York, NY 10025",
-            "latitude": 40.7939,
-            "longitude": -73.9720,
+            "address": "GMS Road, Dehradun, Uttarakhand 248001",
+            "latitude": 30.3186,
+            "longitude": 78.0378,
             "last_donation_date": (datetime.now() - timedelta(days=80)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Robert Taylor",
-            "email": "r.taylor@example.com",
-            "phone": "+1-212-555-0107",
+            "name": "Sanjay Rawat",
+            "email": "sanjay.rawat@example.com",
+            "phone": "+91-9876543216",
             "blood_type": "B-",
             "age": 41,
             "weight": 90.5,
-            "address": "234 West 42nd Street, New York, NY 10036",
-            "latitude": 40.7577,
-            "longitude": -73.9857,
+            "address": "EC Road, Dehradun, Uttarakhand 248001",
+            "latitude": 30.3203,
+            "longitude": 78.0294,
             "last_donation_date": (datetime.now() - timedelta(days=110)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Lisa Anderson",
-            "email": "lisa.anderson@example.com",
-            "phone": "+1-212-555-0108",
+            "name": "Kavita Negi",
+            "email": "kavita.negi@example.com",
+            "phone": "+91-9876543217",
             "blood_type": "O+",
             "age": 34,
             "weight": 65.0,
-            "address": "678 Columbus Avenue, New York, NY 10024",
-            "latitude": 40.7789,
-            "longitude": -73.9759,
+            "address": "Haridwar Road, Dehradun, Uttarakhand 248001",
+            "latitude": 30.2993,
+            "longitude": 78.0190,
             "last_donation_date": (datetime.now() - timedelta(days=70)).strftime("%Y-%m-%d")
         },
         {
-            "name": "James Thomas",
-            "email": "james.thomas@example.com",
-            "phone": "+1-212-555-0109",
+            "name": "Rohit Bisht",
+            "email": "rohit.bisht@example.com",
+            "phone": "+91-9876543218",
             "blood_type": "A+",
             "age": 50,
             "weight": 78.0,
-            "address": "890 Broadway, Brooklyn, NY 11211",
-            "latitude": 40.7081,
-            "longitude": -73.9571,
+            "address": "Ballupur, Dehradun, Uttarakhand 248001",
+            "latitude": 30.3431,
+            "longitude": 78.0569,
             "last_donation_date": (datetime.now() - timedelta(days=130)).strftime("%Y-%m-%d")
         },
         {
-            "name": "Maria Garcia",
-            "email": "maria.garcia@example.com",
-            "phone": "+1-212-555-0110",
+            "name": "Sunita Chauhan",
+            "email": "sunita.chauhan@example.com",
+            "phone": "+91-9876543219",
             "blood_type": "AB-",
             "age": 27,
             "weight": 60.0,
-            "address": "145 Court Street, Brooklyn, NY 11201",
-            "latitude": 40.6909,
-            "longitude": -73.9923,
+            "address": "Prem Nagar, Dehradun, Uttarakhand 248007",
+            "latitude": 30.2863,
+            "longitude": 78.0649,
             "last_donation_date": (datetime.now() - timedelta(days=95)).strftime("%Y-%m-%d")
         }
     ]
@@ -152,11 +152,13 @@ def create_sample_donors():
         print(f"Successfully created {len(sample_donors)} sample donors!")
         
         # Display created donors
-        print("\nSample Donors Created:")
+        print("\nSample Donors Created (Dehradun/Rishikesh Area):")
         print("-" * 80)
         for donor_data in sample_donors:
             print(f"{donor_data['name']} | {donor_data['blood_type']} | {donor_data['address']}")
         print("-" * 80)
+        print(f"\nLocation: Latitude 30.3275, Longitude 78.0325")
+        print("Search in this area to see all sample donors!")
         
     except Exception as e:
         print(f"Error creating sample donors: {e}")

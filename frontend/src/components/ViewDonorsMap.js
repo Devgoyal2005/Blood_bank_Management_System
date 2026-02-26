@@ -162,34 +162,6 @@ function ViewDonorsMap() {
           </form>
         </div>
 
-        {/* Quick location presets */}
-        <div className="card" style={{ marginTop: '20px' }}>
-          <h4 style={{ marginBottom: '15px', color: '#333' }}>Quick Location Presets</h4>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
-            <button
-              className="btn btn-secondary"
-              onClick={() => setLocation({ ...location, latitude: '40.7128', longitude: '-74.0060' })}
-              style={{ padding: '10px', fontSize: '14px' }}
-            >
-              📍 New York City
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={() => setLocation({ ...location, latitude: '34.0522', longitude: '-118.2437' })}
-              style={{ padding: '10px', fontSize: '14px' }}
-            >
-              📍 Los Angeles
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={() => setLocation({ ...location, latitude: '41.8781', longitude: '-87.6298' })}
-              style={{ padding: '10px', fontSize: '14px' }}
-            >
-              📍 Chicago
-            </button>
-          </div>
-        </div>
-
         {showMap && (
           <div id="map-section" style={{ marginTop: '40px' }}>
             {donors.length > 0 ? (

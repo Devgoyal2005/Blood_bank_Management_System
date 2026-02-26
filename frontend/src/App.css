@@ -167,6 +167,23 @@
   overflow: hidden;
   margin-top: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.fullscreen-map {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+.fullscreen-map .leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .donors-list {

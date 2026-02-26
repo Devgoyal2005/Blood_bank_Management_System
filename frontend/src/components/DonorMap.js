@@ -32,9 +32,117 @@ const donorIcon = new L.Icon({
 
 function DonorMap({ donors, requestLocation }) {
   const [map, setMap] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = () => {
+    const mapElement = document.getElementById('donor-map-container');
+    
+    if (!isFullscreen) {
+      // Enter fullscreen
+      if (mapElement.requestFullscreen) {
+        mapElement.requestFullscreen();
+      } else if (mapElement.mozRequestFullScreen) { // Firefox
+        mapElement.mozRequestFullScreen();
+      } else if (mapElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        mapElement.webkitRequestFullscreen();
+      } else if (mapElement.msRequestFullscreen) { // IE/Edge
+        mapElement.msRequestFullscreen();
+      }
+      setIsFullscreen(true);
+    } else {
+      // Exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+      setIsFullscreen(false);
+    }
+  };
+
+  // Listen for fullscreen changes
+  React.useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
 
   return (
-    <div className="map-container" style={{ height: '400px', borderRadius: '12px', overflow: 'hidden' }}>
+    <div 
+      id="donor-map-container"
+      className={`map-container ${isFullscreen ? 'fullscreen-map' : ''}`}
+      style={{ 
+        height: isFullscreen ? '100vh' : '400px', 
+        borderRadius: isFullscreen ? '0' : '12px', 
+        overflow: 'hidden',
+        position: 'relative'
+      }}
+    >
+      {/* Fullscreen Toggle Button */}
+      <button
+        onClick={toggleFullscreen}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          zIndex: 1000,
+          backgroundColor: 'white',
+          border: '2px solid #ccc',
+          borderRadius: '6px',
+          padding: '10px 15px',
+          cursor: 'pointer',
+          fontSize: '16px',
+          fontWeight: '600',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '5px',
+          transition: 'all 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = '#f0f0f0';
+          e.target.style.transform = 'scale(1.05)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'white';
+          e.target.style.transform = 'scale(1)';
+        }}
+        title={isFullscreen ? 'Exit Fullscreen' : 'View Fullscreen'}
+      >
+        {isFullscreen ? (
+          <>
+            <span style={{ fontSize: '18px' }}>⊗</span>
+            <span>Exit Fullscreen</span>
+          </>
+        ) : (
+          <>
+            <span style={{ fontSize: '18px' }}>⛶</span>
+            <span>Fullscreen</span>
+          </>
+        )}
+      </button>
+
       <MapContainer
         center={[requestLocation.lat, requestLocation.lng]}
         zoom={12}

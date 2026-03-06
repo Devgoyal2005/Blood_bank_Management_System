@@ -1,0 +1,25 @@
+in the sign in pase make sign in for different entities,
+sign in for NGOs for individuals or for hospitals...
+the hospitals and NGOs can upload their data of blood 
+donation camp...and map of which individual donated 
+what blood..the individual is supposed to maintain an 
+adhar card through which his credentials will 
+be linked...
+
+and on each profile there must be stats of how much they 
+have donated so far
+
+and if a user registers fr the first time, 
+he must recieve a welvome mail
+
+and if a organization like hospital or ngo enters 
+their data, he will also recieve a mail
+
+for ngo or hospital they can find a p;ace on to conduct 
+theur blood donation, or to collaborate with others
+
+if some institute wants to have blood donationc amp 
+like a college they can also search map
+
+if someone wants to donate blood...they can also searh 
+and newar plcae available for it

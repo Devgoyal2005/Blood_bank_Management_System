@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import './DonorMap.css';
 import L from 'leaflet';
 
 // Fix for default marker icons in react-leaflet
@@ -30,9 +31,40 @@ const donorIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-function DonorMap({ donors, requestLocation }) {
+function DonorMap({ donors, requestLocation, onDonorClick }) {
   const [map, setMap] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Component to auto-fit map bounds
+  function MapBounds() {
+    const map = useMap();
+    
+    useEffect(() => {
+      if (donors && donors.length > 0) {
+        const bounds = [];
+        
+        // Add all donor positions
+        donors.forEach(donor => {
+          bounds.push([donor.latitude, donor.longitude]);
+        });
+        
+        // Add request location
+        if (requestLocation) {
+          bounds.push([requestLocation.lat, requestLocation.lng]);
+        }
+        
+        // Fit bounds with padding
+        if (bounds.length > 0) {
+          map.fitBounds(bounds, {
+            padding: [50, 50],
+            maxZoom: 14
+          });
+        }
+      }
+    }, [donors, map]);
+    
+    return null;
+  }
 
   const toggleFullscreen = () => {
     const mapElement = document.getElementById('donor-map-container');
@@ -93,7 +125,7 @@ function DonorMap({ donors, requestLocation }) {
       id="donor-map-container"
       className={`map-container ${isFullscreen ? 'fullscreen-map' : ''}`}
       style={{ 
-        height: isFullscreen ? '100vh' : '400px', 
+        height: isFullscreen ? '100vh' : '600px', 
         borderRadius: isFullscreen ? '0' : '12px', 
         overflow: 'hidden',
         position: 'relative'
@@ -149,6 +181,9 @@ function DonorMap({ donors, requestLocation }) {
         style={{ height: '100%', width: '100%' }}
         whenCreated={setMap}
       >
+        {/* Auto-fit bounds component */}
+        <MapBounds />
+        
         {/* OpenStreetMap tile layer - completely free! */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -173,9 +208,36 @@ function DonorMap({ donors, requestLocation }) {
             key={donor.id}
             position={[donor.latitude, donor.longitude]}
             icon={donorIcon}
+            eventHandlers={{
+              click: () => {
+                if (onDonorClick) {
+                  onDonorClick(donor);
+                }
+              }
+            }}
           >
+            {/* Permanent tooltip with donor name */}
+            <Tooltip 
+              permanent 
+              direction="top" 
+              offset={[0, -20]}
+              className="donor-name-tooltip"
+            >
+              <div style={{ 
+                fontSize: '12px', 
+                fontWeight: '600', 
+                whiteSpace: 'nowrap',
+                textAlign: 'center'
+              }}>
+                {donor.name}
+                <div style={{ fontSize: '10px', color: '#666' }}>
+                  {donor.distance} km
+                </div>
+              </div>
+            </Tooltip>
+            
             <Popup>
-              <div style={{ padding: '5px', minWidth: '150px' }}>
+              <div style={{ padding: '5px', minWidth: '180px' }}>
                 <h4 style={{ margin: '0 0 8px 0', color: '#dc3545', fontSize: '14px' }}>
                   {donor.name}
                 </h4>
@@ -186,8 +248,30 @@ function DonorMap({ donors, requestLocation }) {
                   <strong>Distance:</strong> {donor.distance} km
                 </p>
                 <p style={{ margin: '3px 0', fontSize: '12px' }}>
+                  <strong>Total Donations:</strong> {donor.total_donations || 0}
+                </p>
+                <p style={{ margin: '3px 0', fontSize: '12px' }}>
                   <strong>Phone:</strong> {donor.phone}
                 </p>
+                {onDonorClick && (
+                  <button
+                    onClick={() => onDonorClick(donor)}
+                    style={{
+                      marginTop: '10px',
+                      width: '100%',
+                      padding: '8px',
+                      background: '#dc3545',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '12px',
+                      fontWeight: '600'
+                    }}
+                  >
+                    View Full Profile
+                  </button>
+                )}
               </div>
             </Popup>
           </Marker>

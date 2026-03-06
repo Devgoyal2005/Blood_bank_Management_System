@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import DonorMap from './DonorMap';
+import DonorProfile from './DonorProfile';
 
 const API_URL = 'http://localhost:8000';
 
@@ -16,6 +17,15 @@ function ViewDonorsMap() {
   const [showMap, setShowMap] = useState(false);
   const [loading, setLoading] = useState(false);
   const [locationLoading, setLocationLoading] = useState(false);
+  const [selectedDonor, setSelectedDonor] = useState(null);
+
+  const handleDonorClick = (donor) => {
+    setSelectedDonor(donor);
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedDonor(null);
+  };
 
   const handleChange = (e) => {
     setLocation({
@@ -176,18 +186,27 @@ function ViewDonorsMap() {
                     lat: parseFloat(location.latitude),
                     lng: parseFloat(location.longitude)
                   }}
+                  onDonorClick={handleDonorClick}
                 />
 
                 <div className="donors-list">
                   <h4 style={{ marginBottom: '15px', marginTop: '30px' }}>Donor Details:</h4>
                   {donors.map((donor, index) => (
-                    <div key={donor.id} className="donor-card">
+                    <div 
+                      key={donor.id} 
+                      className="donor-card"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleDonorClick(donor)}
+                    >
                       <h4>
                         {index + 1}. {donor.name} - {donor.blood_type}
                       </h4>
                       <div className="donor-info">
                         <div className="donor-info-item">
                           <strong>Distance:</strong> {donor.distance} km
+                        </div>
+                        <div className="donor-info-item">
+                          <strong>Total Donations:</strong> {donor.total_donations || 0}
                         </div>
                         <div className="donor-info-item">
                           <strong>Phone:</strong> {donor.phone}
@@ -199,6 +218,9 @@ function ViewDonorsMap() {
                           <strong>Address:</strong> {donor.address}
                         </div>
                       </div>
+                      <p style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+                        Click to view full profile
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -213,6 +235,14 @@ function ViewDonorsMap() {
               </div>
             )}
           </div>
+        )}
+        
+        {/* Donor Profile Modal */}
+        {selectedDonor && (
+          <DonorProfile 
+            donorId={selectedDonor.id} 
+            onClose={handleCloseProfile} 
+          />
         )}
       </div>
     </div>

@@ -203,13 +203,62 @@ def get_nearby_donors(
                 "address": donor.address,
                 "latitude": donor.latitude,
                 "longitude": donor.longitude,
-                "distance": round(distance, 2)
+                "distance": round(distance, 2),
+                "total_donations": donor.total_donations or 0
             })
     
     # Sort by distance
     nearby_donors.sort(key=lambda x: x["distance"])
     
     return {"donors": nearby_donors, "total": len(nearby_donors)}
+
+@app.get("/api/donors/{donor_id}/profile")
+def get_donor_profile(donor_id: str, db: Session = Depends(get_db)):
+    """Get detailed donor profile with donation history"""
+    from database import DonationHistory
+    
+    # Get donor information
+    donor = db.query(Donor).filter(Donor.id == donor_id).first()
+    
+    if not donor:
+        raise HTTPException(status_code=404, detail="Donor not found")
+    
+    # Get donation history
+    donations = db.query(DonationHistory).filter(
+        DonationHistory.donor_id == donor_id
+    ).order_by(DonationHistory.donation_date.desc()).all()
+    
+    donation_history = [
+        {
+            "id": donation.id,
+            "donation_date": donation.donation_date.isoformat(),
+            "blood_type": donation.blood_type,
+            "units_donated": donation.units_donated,
+            "hospital_name": donation.hospital_name,
+            "notes": donation.notes
+        }
+        for donation in donations
+    ]
+    
+    return {
+        "donor": {
+            "id": donor.id,
+            "name": donor.name,
+            "email": donor.email,
+            "phone": donor.phone,
+            "blood_type": donor.blood_type,
+            "age": donor.age,
+            "weight": donor.weight,
+            "address": donor.address,
+            "latitude": donor.latitude,
+            "longitude": donor.longitude,
+            "last_donation_date": donor.last_donation_date,
+            "total_donations": donor.total_donations or 0,
+            "aadhaar_number": donor.aadhaar_number,
+            "medical_conditions": donor.medical_conditions
+        },
+        "donation_history": donation_history
+    }
 
 @app.post("/api/blood-requests")
 async def create_blood_request(

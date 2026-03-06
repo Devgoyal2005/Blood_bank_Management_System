@@ -28,7 +28,10 @@ class Donor(Base):
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
     last_donation_date = Column(String, nullable=True)
+    total_donations = Column(Integer, default=0)
     medical_conditions = Column(Text, nullable=True)
+    aadhaar_number = Column(String, unique=True, nullable=True, index=True)
+    user_id = Column(String, nullable=True)  # Link to User table
     registered_at = Column(DateTime, default=datetime.now)
 
 class BloodRequest(Base):
@@ -73,10 +76,24 @@ class User(Base):
     full_name = Column(String, nullable=False)
     password_hash = Column(String, nullable=False)
     picture = Column(String, nullable=True)
+    aadhaar_number = Column(String, unique=True, nullable=True, index=True)
     is_donor = Column(Integer, default=0)  # 0=not registered, 1=registered donor
     donor_id = Column(String, nullable=True)  # Link to Donor table if registered
+    is_admin = Column(Integer, default=0)  # 0=regular user, 1=admin
     created_at = Column(DateTime, default=datetime.now)
     last_login = Column(DateTime, default=datetime.now)
+
+class DonationHistory(Base):
+    __tablename__ = "donation_history"
+    
+    id = Column(String, primary_key=True, index=True)
+    donor_id = Column(String, nullable=False, index=True)
+    donation_date = Column(DateTime, nullable=False)
+    blood_type = Column(String, nullable=False)
+    units_donated = Column(Float, default=1.0)
+    hospital_name = Column(String, nullable=True)
+    notes = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.now)
 
 def init_db():
     """Initialize database and create tables"""
